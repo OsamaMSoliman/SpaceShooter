@@ -9,25 +9,29 @@ public class WeaponController : MonoBehaviour
 	/// <summary>
 	/// The game object that represents the laser bolt being fired.
 	/// </summary>
-	public GameObject shot;
+	[SerializeField] private GameObject shot;
 
 	/// <summary>
 	/// The position and rotation transform where the shot should be spawned from.
 	/// </summary>
-	public Transform shotSpawn;
+	[SerializeField] private Transform shotSpawn;
 
 	/// <summary>
 	/// The fire rate of the weapon in seconds.
 	/// </summary>
-	public float fireRate;
+	[SerializeField] private float fireRate;
 
 	/// <summary>
 	/// The delay in seconds before firing the first shot.
 	/// </summary>
-	public float delay;
+	[SerializeField] private float delay;
+
+
+	private AudioSource audioSrc;
 	
 	void Start () 
 	{
+		audioSrc = GetComponent<AudioSource>();
 		InvokeRepeating("FireWeapon", delay, fireRate);
 	}
 
@@ -40,6 +44,6 @@ public class WeaponController : MonoBehaviour
 		Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 
 		// Play the weapon's sound effects.
-		audio.Play();
+		audioSrc.Play();
 	}
 }

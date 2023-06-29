@@ -10,22 +10,22 @@ public class EvasiveManeuver : MonoBehaviour
 	/// <summary>
 	/// The boundary of the level.
 	/// </summary>
-	public Boundary boundary;
+	[SerializeField] private Boundary boundary;
 
 	/// <summary>
 	/// The tilt factor to tilt the enemy spaceship when strafing left or right.
 	/// </summary>
-	public float tilt;
+	[SerializeField] private float tilt;
 
 	/// <summary>
 	/// How far should the enemy ship strafe to the left or right.
 	/// </summary>
-	public float dodge;
+	[SerializeField] private float dodge;
 
 	/// <summary>
 	/// The speed of the evasive maneuver.
 	/// </summary>
-	public float speed;
+	[SerializeField] private float speed;
 
 	/// <summary>
 	/// The random range in seconds to wait before starting the evasive maneuver.
@@ -40,15 +40,19 @@ public class EvasiveManeuver : MonoBehaviour
 	/// <summary>
 	/// The random range in seconds to wait before maneuvering to a new direction.
 	/// </summary>
-	public Vector2 maneuverWait;
+	[SerializeField] private Vector2 maneuverWait;
 
 	/// <summary>
 	/// The velocity vector's X-axis value.
 	/// </summary>
 	private float moveHorizontal;
+
+
+	private Rigidbody rb;
 	
 	void Start () 
 	{
+		rb = GetComponent<Rigidbody>();
 		StartCoroutine( Evade() );
 	}
 
@@ -77,21 +81,21 @@ public class EvasiveManeuver : MonoBehaviour
 		// Change the velocity vector's X-axis value only. The Y and Z values are 
 		// constant. Changing the X values will move the enemy ship diagonally 
 		// left or right.
-		Vector3 newVelocity = rigidbody.velocity;
-		newVelocity.x = Mathf.MoveTowards(rigidbody.velocity.x, 
+		Vector3 newVelocity = rb.velocity;
+		newVelocity.x = Mathf.MoveTowards(rb.velocity.x, 
 		                                  moveHorizontal, 
 		                                  speed * Time.deltaTime);
-		rigidbody.velocity = newVelocity;
+		rb.velocity = newVelocity;
 
 		// Make sure the enemy spaceship does not fly out of the level's boundaries.
-		rigidbody.position = new Vector3(
-			Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
+		rb.position = new Vector3(
+			Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
 			0.0f,
-			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
+			Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
 		);
 
 		// Tilt the enemy spaceship when it is banking left or right 
 		// during the evasive maneuver.
-		rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidbody.velocity.x * -tilt);
+		rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
 	}
 }

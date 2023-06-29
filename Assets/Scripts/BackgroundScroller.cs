@@ -10,22 +10,19 @@ public class BackgroundScroller : MonoBehaviour
 	/// <summary>
 	/// The speed the background should scroll at.
 	/// </summary>
-	public float scrollSpeed = 0.0f;
+	[SerializeField] private float scrollSpeed = 0.0f;
 
 	/// <summary>
 	/// The size along the Z-axis of a single background tile in units.
 	/// </summary>
-	public float tileSizeZ;
+	[SerializeField] private float tileSizeZ;
 
 	/// <summary>
 	/// The initial position of the background game object.
 	/// </summary>
 	private Vector3 startPosition;
 
-	void Start () 
-	{
-		startPosition = transform.position;
-	}
+	private void Awake() => startPosition = transform.position;
 	
 	void Update () 
 	{

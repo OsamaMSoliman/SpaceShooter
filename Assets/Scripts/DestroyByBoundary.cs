@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// TODO: use Network Objectpooling
+// use OnTriggerExit to despawn! 
+
 /// <summary>
 /// Destroys a game object when it exits the level's boundaries.
 /// </summary>

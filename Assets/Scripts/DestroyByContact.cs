@@ -12,18 +12,18 @@ public class DestroyByContact : MonoBehaviour
 	/// The explosion visual effect to be displayed when the game objects collide.
 	/// This is optional. Not all game objects need an explosion visual effect.
 	/// </summary>
-	public GameObject explosion;
+	[SerializeField] private GameObject explosion;
 
 	/// <summary>
 	/// The explosion visual effect for the Player object when it collides 
 	/// into an enemy.
 	/// </summary>
-	public GameObject playerExplosion;
+	[SerializeField] private GameObject playerExplosion;
 
 	/// <summary>
 	/// The number of points the Player will score when the enemy is destroyed.
 	/// </summary>
-	public int scoreValue;
+	[SerializeField] private int scoreValue;
 
 	/// <summary>
 	/// The reference to the single GameController instance that controls 

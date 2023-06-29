@@ -19,23 +19,23 @@ public class PlayerController : MonoBehaviour
 	/// The speed of the Player's ship. This value will be set from Unity's 
 	/// Inspector panel.
 	/// </summary>
-	public float speed;
+	[SerializeField] private float speed;
 
 	/// <summary>
 	/// The boundary of the game world.
 	/// </summary>
-	public Boundary boundary;
+	[SerializeField] private Boundary boundary;
 	
 	/// <summary>
 	/// The tilt of the spaceship when banking to the left or right.
 	/// </summary>
-	public float tilt;
+	[SerializeField] private float tilt;
 
 	/// <summary>
 	/// The laser bolt game object that will be created when the 
 	/// Player presses 'Fire'.
 	/// </summary>
-	public GameObject laserBolt;
+	[SerializeField] private GameObject laserBolt;
 
 	/// <summary>
 	/// The transform containing the position and rotation where the laser bolt
@@ -46,12 +46,22 @@ public class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Player's firing rate.
 	/// </summary>
-	public float fireRate = 0.5f;
+	[SerializeField] private float fireRate = 0.5f;
 
 	/// <summary>
 	/// The time in seconds when the Player can fire the next shot.
 	/// </summary>
 	private float nextFire = 0.0f;
+
+
+	private Rigidbody rb;
+	private AudioSource audioSrc;
+
+	private void Awake() {
+		rb = GetComponent<Rigidbody>();
+		audioSrc = GetComponent<AudioSource>();
+	}
+
 
 	void Update()
 	{
@@ -64,7 +74,7 @@ public class PlayerController : MonoBehaviour
 			Instantiate(laserBolt, shotSpawn.position, shotSpawn.rotation);
 
 			// Play the sound effect when Player fires the spaceship's weapons.
-			audio.Play();
+			audioSrc.Play();
 		}
 	}
 
@@ -75,16 +85,16 @@ public class PlayerController : MonoBehaviour
 
 		// Move the spaceship based on player's input.
 		Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-		rigidbody.velocity = movement * speed;
+		rb.velocity = movement * speed;
 
 		// Clamp the spaceship to be within the game world's boundaries.
-		rigidbody.position = new Vector3(
-			Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
+		rb.position = new Vector3(
+			Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
 			0.0f,
-			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
+			Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
 		);
 
 		// Tilt the spaceship when banking to the left or right.
-		rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidbody.velocity.x * -tilt);
+		rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
 	}
 }

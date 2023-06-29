@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
@@ -10,7 +11,7 @@ public class GameController : MonoBehaviour
 	/// The list of hazards in the game that will be selected randomly to annoy
 	/// the Player.
 	/// </summary>
-	public GameObject[] hazards;
+	[SerializeField] private GameObject[] hazards;
 
 	/// <summary>
 	/// The x, y and z values to spawn the asteroid. y value will be 0.0f, since
@@ -21,7 +22,7 @@ public class GameController : MonoBehaviour
 	/// <summary>
 	/// The number of asteroids to spawn in a wave.
 	/// </summary>
-	public int hazardCount;
+	[SerializeField] private int hazardCount;
 
 	/// <summary>
 	/// The number of seconds to wait before spawing the next asteroid in a wave.
@@ -31,28 +32,28 @@ public class GameController : MonoBehaviour
 	/// <summary>
 	/// The number of seconds to wait before starting the asteroid wave.
 	/// </summary>
-	public float startWait;
+	[SerializeField] private float startWait;
 
 	/// <summary>
 	/// The number of seconds to wait before starting the next wave of asteroids.
 	/// </summary>
-	public float waveWait;
+	[SerializeField] private float waveWait;
 
 	/// <summary>
 	/// The GUIText component that is used to display the restart message 
 	/// after the game is over.
 	/// </summary>
-	public GUIText restartText;
+	[SerializeField] private Text restartText;
 
 	/// <summary>
 	/// The GUIText component that is used to display the Game Over message.
 	/// </summary>
-	public GUIText gameOverText;
+	[SerializeField] private Text gameOverText;
 
 	/// <summary>
 	/// The GUIText component that is used for displaying the Player's score.
 	/// </summary>
-	public GUIText playerScoreText;
+	[SerializeField] private Text playerScoreText;
 	
 	private int playerScore;
 	/// <summary>
