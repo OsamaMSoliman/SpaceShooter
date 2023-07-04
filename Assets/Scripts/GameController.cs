@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -27,7 +28,8 @@ public class GameController : MonoBehaviour
 	/// <summary>
 	/// The number of seconds to wait before spawing the next asteroid in a wave.
 	/// </summary>
-	public float spawnWait;
+	[SerializeField] private float spawnWait;
+	private WaitForSeconds spawnWaitPeriod;
 
 	/// <summary>
 	/// The number of seconds to wait before starting the asteroid wave.
@@ -38,6 +40,7 @@ public class GameController : MonoBehaviour
 	/// The number of seconds to wait before starting the next wave of asteroids.
 	/// </summary>
 	[SerializeField] private float waveWait;
+	private WaitForSeconds waveWaitPeriod;
 
 	/// <summary>
 	/// The GUIText component that is used to display the restart message 
@@ -103,6 +106,9 @@ public class GameController : MonoBehaviour
 		ShouldRestartGame = false;
 		PlayerScore = 0;
 
+		spawnWaitPeriod = new WaitForSeconds(spawnWait);
+		waveWaitPeriod = new WaitForSeconds(waveWait);
+
 		StartCoroutine( SpawnWaves() );
 	}
 
@@ -112,7 +118,7 @@ public class GameController : MonoBehaviour
 		if (ShouldRestartGame && Input.GetKeyDown(KeyCode.R)) 
 		{
 			// Reload the current level. There is only one level anyway.
-			Application.LoadLevel(Application.loadedLevel);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 	}
 
@@ -128,11 +134,11 @@ public class GameController : MonoBehaviour
 			for (int i = 0; i < hazardCount; i++) 
 			{
 				SpawnHazard();
-				yield return new WaitForSeconds(spawnWait);
+				yield return spawnWaitPeriod;
 			}
 
 			// Wait for a while before starting the next wave.
-			yield return new WaitForSeconds(waveWait);
+			yield return waveWaitPeriod;
 		}
 
 		// Player is dead. We should restart the game.
