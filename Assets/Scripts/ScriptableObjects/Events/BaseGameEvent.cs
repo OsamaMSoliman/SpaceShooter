@@ -5,7 +5,7 @@ namespace Nsr.MultiSpaceShooter
 {
     public class BaseGameEvent<T> : ScriptableObject
     {
-        [field: SerializeField] public T CurrentValue { get; private set; }
+        [field: SerializeField] public T CurrentValue { get; protected set; }
         private event UnityAction<T> unityEvent;
         public void Raise(T value) => unityEvent.Invoke(CurrentValue = value);
         public void AddListener(UnityAction<T> action) => unityEvent += action;

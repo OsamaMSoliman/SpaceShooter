@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85354773fbb6d4744a8aa83a0d9f3f44, type: 3}
+  m_Name: Canvas Changed Event
+  m_EditorClassIdentifier: 
+  <CurrentValue>k__BackingField: {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb,
+    type: 2}
+  defaultValue: {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb, type: 2}
+  values:
+  - {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb, type: 2}
+  - {fileID: 11400000, guid: 6df3e331765110847a4322550f4277bd, type: 2}
+  - {fileID: 11400000, guid: 0dd67bb889e24bd4696828ef4d9e069a, type: 2}
+  - {fileID: 11400000, guid: 9b002c3f52d1f4d48ad19b1d991758da, type: 2}

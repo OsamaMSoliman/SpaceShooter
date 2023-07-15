@@ -563,6 +563,7 @@ GameObject:
   - component: {fileID: 4306907726474215181}
   - component: {fileID: 4306907726474215180}
   - component: {fileID: 4582559204673933137}
+  - component: {fileID: 6068341000717135416}
   m_Layer: 5
   m_Name: JoinLobby
   m_TagString: Untagged
@@ -668,6 +669,20 @@ MonoBehaviour:
     type: 3}
   scrollContent: {fileID: 4306907727750918029}
   lobbyManagerSO: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
+--- !u!114 &6068341000717135416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306907726474215183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b18c30456261844ab2b947359d063c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasChangedEvent: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+  myCanvasState: {fileID: 11400000, guid: 9b002c3f52d1f4d48ad19b1d991758da, type: 2}
 --- !u!1 &4306907726701787553
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +696,7 @@ GameObject:
   - component: {fileID: 4306907726701787556}
   - component: {fileID: 4306907726701787559}
   m_Layer: 5
-  m_Name: CreateNewBtn
+  m_Name: HostLobbyBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -791,25 +806,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4306907726474215183}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.BaseGameEvent`1[[Nsr.MultiSpaceShooter.CanvasState,
+          Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 6df3e331765110847a4322550f4277bd,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Nsr.MultiSpaceShooter.CanvasState, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -936,7 +941,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4306907727926814989}
   m_HandleRect: {fileID: 4306907727926814988}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1014,7 +1019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: -0.000109961096}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4306907727750918018

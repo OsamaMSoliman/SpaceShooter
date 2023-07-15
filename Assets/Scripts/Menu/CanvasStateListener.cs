@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Nsr.MultiSpaceShooter
 {
     public class CanvasStateListener : CanvasStatePersistentListener
@@ -7,7 +5,6 @@ namespace Nsr.MultiSpaceShooter
         
         protected override void InvokedMethod(CanvasState canvasState)
         {
-            Debug.Log($"{gameObject.name} {myCanvasState == canvasState}");
             gameObject.SetActive(myCanvasState == canvasState);
         }
     }

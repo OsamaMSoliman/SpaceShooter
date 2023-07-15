@@ -1065,29 +1065,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4414441256845635816}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.BaseGameEvent`1[[Nsr.MultiSpaceShooter.CanvasState,
+          Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 9b002c3f52d1f4d48ad19b1d991758da,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Nsr.MultiSpaceShooter.CanvasState, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &4414441256845635816
 GameObject:
@@ -1102,6 +1092,7 @@ GameObject:
   - component: {fileID: 4414441256845635818}
   - component: {fileID: 4414441256845635817}
   - component: {fileID: 9025767295905575607}
+  - component: {fileID: 8652083930930002095}
   m_Layer: 5
   m_Name: CreateLobby
   m_TagString: Untagged
@@ -1205,6 +1196,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: {fileID: 6419966680896523032}
   lobbyManagerSO: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
+  canvasChangedEvent: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+  canvasState: {fileID: 11400000, guid: 0dd67bb889e24bd4696828ef4d9e069a, type: 2}
+--- !u!114 &8652083930930002095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414441256845635816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b18c30456261844ab2b947359d063c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasChangedEvent: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+  myCanvasState: {fileID: 11400000, guid: 6df3e331765110847a4322550f4277bd, type: 2}
 --- !u!1 &4414441257118617336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,7 +1851,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5873052156956883526}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 

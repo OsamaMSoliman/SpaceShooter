@@ -10,6 +10,9 @@ namespace Nsr.MultiSpaceShooter
 
         [Header("Dependencies")] // use ? when accessing them
         [SerializeField] private LobbyManagerSO lobbyManagerSO;
+        [Header("Event Raiser when successful")]
+        [SerializeField] private CanvasChangedEvent canvasChangedEvent;
+        [SerializeField] private CanvasState nextCanvasState;
 
         public void OnClickCreateNewLobby()
         {
@@ -21,7 +24,7 @@ namespace Nsr.MultiSpaceShooter
             else
             {
                 // TODO: lobbyManagerSO?.CreateLobby();
-                // TODO: go to InsideLobbyCanvas
+                canvasChangedEvent.Raise(nextCanvasState);
             }
         }
 

@@ -35,5 +35,7 @@ namespace Nsr.MultiSpaceShooter
                 child.sizeDelta = this.playerSize;
             }
         }
+
+        // TODO: OnClick join the lobby
     }
 }

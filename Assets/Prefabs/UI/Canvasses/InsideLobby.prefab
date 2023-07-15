@@ -955,6 +955,7 @@ GameObject:
   - component: {fileID: 5122922964781034035}
   - component: {fileID: 5122922964781034032}
   - component: {fileID: 601105417767515498}
+  - component: {fileID: 330516139}
   m_Layer: 5
   m_Name: InsideLobby
   m_TagString: Untagged
@@ -1063,6 +1064,20 @@ MonoBehaviour:
   playersContainer: {fileID: 2735779606916764982}
   firstLobbyPlayer: {fileID: 274327243307155099}
   lobbyManagerSO: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
+--- !u!114 &330516139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5122922964781034033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b18c30456261844ab2b947359d063c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasChangedEvent: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+  myCanvasState: {fileID: 11400000, guid: 0dd67bb889e24bd4696828ef4d9e069a, type: 2}
 --- !u!1 &5122922965628892641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,6 +1206,20 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.BaseGameEvent`1[[Nsr.MultiSpaceShooter.CanvasState,
+          Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 9b002c3f52d1f4d48ad19b1d991758da,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: Nsr.MultiSpaceShooter.CanvasState, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
