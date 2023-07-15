@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 8259304810496802565}
   - component: {fileID: 8259304810496802563}
   - component: {fileID: 8259304810496802564}
-  - component: {fileID: 358976569605155922}
+  - component: {fileID: 7328954939246738759}
   - component: {fileID: 8882245735640206417}
   m_Layer: 5
   m_Name: JoinLobbyBtn
@@ -655,7 +655,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &358976569605155922
+--- !u!114 &7328954939246738759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -674,7 +674,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -684,10 +684,11 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300024, guid: 56d84991286850f428b4e7df0cca7380,
+      type: 3}
+    m_PressedSprite: {fileID: 21300016, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
+    m_SelectedSprite: {fileID: 21300024, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
+    m_DisabledSprite: {fileID: 21300014, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -711,9 +712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303eeb31a530df948a168f5c2cc874f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LobbyName: {fileID: 8452375933393803433}
-  LobbyCode: {fileID: 349387011295070703}
-  PlayersCount: {fileID: 8259304811537982522}
+  lobbyName: {fileID: 8452375933393803433}
+  lobbyId: {fileID: 349387011295070703}
+  playersCount: {fileID: 8259304811537982522}
 --- !u!1 &8259304810767380807
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +804,7 @@ GameObject:
   - component: {fileID: 8259304811311878085}
   - component: {fileID: 8259304811311878086}
   m_Layer: 5
-  m_Name: Code
+  m_Name: ID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

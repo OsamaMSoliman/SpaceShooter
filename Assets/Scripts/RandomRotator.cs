@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-// TODO: server call?
+// TODO: server call? (doesn't need to be, but maybe let's make it ServerRpc)
 
 /// <summary>
 /// Gives an asteroid a random rotation animation.

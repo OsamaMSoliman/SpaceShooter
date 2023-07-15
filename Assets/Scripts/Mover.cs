@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+
+// TODO: not sure if this should be local or the server should signal it after spawning????
 
 /// <summary>
 /// Moves a game object that this script is attached to.

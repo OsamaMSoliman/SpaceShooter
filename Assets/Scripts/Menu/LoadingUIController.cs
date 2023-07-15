@@ -1,23 +1,27 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadingUIController : MonoBehaviour
+namespace Nsr.MultiSpaceShooter
 {
-    [SerializeField] private Text loadingText;
-    [SerializeField] private Color pingColor;
-    [SerializeField] private Color pongColor;
-    [SerializeField] private Slider progressBar;
-    [SerializeField] private Text progressText;
-
-    [Header("External")]
-    [SerializeField] private LoadingManager loadingManager;
-
-
-    private void Update()
+    public class LoadingUIController : MonoBehaviour
     {
-        loadingText.color = Color.Lerp(pingColor, pongColor, Mathf.PingPong(Time.time, 1));
-        progressBar.value = loadingManager.ProgressValue;
-        progressText.text = loadingManager.ProgressValue.ToString() + " %";
-    }
+        [SerializeField] private TextMeshProUGUI loadingText;
+        [SerializeField] private Color pingColor;
+        [SerializeField] private Color pongColor;
+        [SerializeField] private Slider progressBar;
+        [SerializeField] private TextMeshProUGUI progressText;
 
+        [Header("Dependencies")] // use ? when accessing them
+        [SerializeField] private LoadingManagerSO loadingManagerSO;
+
+
+        private void Update()
+        {
+            loadingText.color = Color.Lerp(pingColor, pongColor, Mathf.PingPong(Time.time, 1));
+            progressBar.value = loadingManagerSO?.ProgressValue ?? default;
+            progressText.text = loadingManagerSO?.ProgressValue.ToString() + " %";
+        }
+
+    }
 }

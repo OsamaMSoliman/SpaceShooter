@@ -335,7 +335,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.01
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -665,9 +665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b71c516dd5fac641973307091c886f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingText: {fileID: 0}
+  loadingText: {fileID: 4950061417957732993}
   pingColor: {r: 0.058823533, g: 0.64705884, b: 0.7843138, a: 1}
   pongColor: {r: 0, g: 0.32941177, b: 0.34117648, a: 1}
   progressBar: {fileID: 3269544993763515209}
-  progressText: {fileID: 0}
-  loadingManager: {fileID: 0}
+  progressText: {fileID: 2569903221784509065}
+  loadingManagerSO: {fileID: 11400000, guid: 7a0397293f470ea4eab47983f913d6ba, type: 2}

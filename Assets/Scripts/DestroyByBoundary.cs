@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 // TODO: use Network Objectpooling
 // use OnTriggerExit to despawn! 

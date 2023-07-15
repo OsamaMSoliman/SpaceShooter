@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Fires the weapon repeatedly based on the weapon's fire rate settings.
