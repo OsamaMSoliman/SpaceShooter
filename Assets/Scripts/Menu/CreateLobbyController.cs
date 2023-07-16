@@ -8,7 +8,7 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private TMP_InputField roomName;
 
-        [Header("Dependencies")] // use ? when accessing them
+        [Header("Dependencies ?")] // use ? when accessing them
         [SerializeField] private LobbyManagerSO lobbyManagerSO;
         [Header("Event Raiser when successful")]
         [SerializeField] private CanvasChangedEvent canvasChangedEvent;
@@ -23,7 +23,7 @@ namespace Nsr.MultiSpaceShooter
             }
             else
             {
-                // TODO: lobbyManagerSO?.CreateLobby();
+                lobbyManagerSO?.CreateLobby();
                 canvasChangedEvent.Raise(nextCanvasState);
             }
         }

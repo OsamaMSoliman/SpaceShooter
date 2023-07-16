@@ -15,8 +15,3 @@ MonoBehaviour:
   <CurrentValue>k__BackingField: {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb,
     type: 2}
   defaultValue: {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb, type: 2}
-  values:
-  - {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb, type: 2}
-  - {fileID: 11400000, guid: 6df3e331765110847a4322550f4277bd, type: 2}
-  - {fileID: 11400000, guid: 0dd67bb889e24bd4696828ef4d9e069a, type: 2}
-  - {fileID: 11400000, guid: 9b002c3f52d1f4d48ad19b1d991758da, type: 2}
