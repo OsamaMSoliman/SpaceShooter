@@ -10,18 +10,30 @@ namespace Nsr.MultiSpaceShooter
         [SerializeField] private Image playerStatusImg;
         [SerializeField] private Sprite readySprite, notReadySprite;
 
-        public ulong PlayerId { get; private set; }
+        public string PlayerId { get; private set; }
+        private CanvasGroup canvasGroup;
 
-        public void Init(ulong playerId)
+        private void Awake() => canvasGroup = GetComponent<CanvasGroup>();
+
+        public void Init(string playerId, bool isReady)
         {
             PlayerId = playerId;
             this.playerId.text = $"Player {playerId}";
+            canvasGroup.alpha = 1;
+            SetReady(isReady);
         }
 
         public void SetReady(bool isReady)
         {
             playerStatus.text = isReady ? "Ready" : "Waiting";
             playerStatusImg.sprite = isReady ? readySprite : notReadySprite;
+        }
+
+        public void terminate()
+        {
+            this.playerId.text = "Player Id";
+            SetReady(false);
+            canvasGroup.alpha = 0.1f;
         }
     }
 }

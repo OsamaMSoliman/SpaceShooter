@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 namespace Nsr.MultiSpaceShooter
@@ -12,26 +14,38 @@ namespace Nsr.MultiSpaceShooter
 
         private void OnEnable()
         {
-            // TODO: FetchLobbiesPeriodically ??
+            // TODO:
+            // lobbyManagerSO.FetchLobbiesPeriodically(true);
+            // lobbyManagerSO.FetchedLobbies += FetchLobbies;
         }
 
-        public void OnClickRefreshLobbies()
+        private void OnDisable()
         {
-            // TODO: FetchLobbies(); ??
+            // TODO:
+            // lobbyManagerSO.FetchLobbiesPeriodically(false);
+            // lobbyManagerSO.FetchedLobbies -= FetchLobbies;
         }
 
+        // public async void OnClickRefreshLobbies()
+        // {
+        //     var lobbies = await lobbyManagerSO?.GetPublicLobbies();
+        //     FetchLobbies(lobbies);
+        // }
 
-        private async void FetchLobbies()
+        private void FetchLobbies(List<Lobby> lobbies)
         {
-            // TODO: clear the lobbies that are already there
+            // TODO: ObjectPooling
+            foreach (Transform item in scrollContent)
+            {
+                Destroy(item);
+            }
 
-            var lobbies = await lobbyManagerSO?.GetPublicLobbies();
             foreach (var lobby in lobbies)
             {
                 JoinLobbyBtn joinLobbyBtn = Instantiate(joinLobbyBtnPrefab, parent: scrollContent);
                 joinLobbyBtn.Init(
                     lobby.Name,
-                    lobby.Id,
+                    lobby.LobbyCode,
                     lobby.Players.Count,
                     lobby.MaxPlayers,
                     () => lobbyManagerSO?.JoinLobbyById(lobby.Id)

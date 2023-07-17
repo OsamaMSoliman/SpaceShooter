@@ -11,8 +11,8 @@ namespace Nsr.MultiSpaceShooter
     public class LobbyManagerSO : ScriptableObject
     {
         #region Room
-        [field: SerializeField] public string RoomName { get; set; }
-        [field: SerializeField] public int MaxPlayersCount { get; set; }
+        [field: SerializeField] public string RoomName { private get; set; }
+        [field: SerializeField] public int MaxPlayersCount { private get; set; }
         #endregion
 
         public Lobby CurrentLobby { get; private set; }

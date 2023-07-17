@@ -8,16 +8,16 @@ namespace Nsr.MultiSpaceShooter
 {
     public class JoinLobbyBtn : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI lobbyName, lobbyId;
+        [SerializeField] private TextMeshProUGUI lobbyName, lobbyCode;
         [SerializeField] private RectTransform playersCount;
         private Vector2 playerSize;
 
-        public string LobbyId { get; private set; }
+        public string LobbyCode { get; private set; }
 
-        public void Init(string lobbyName, string lobbyId, int playerCount, int maxPlayerCount, UnityAction onClick)
+        public void Init(string lobbyName, string lobbyCode, int playerCount, int maxPlayerCount, UnityAction onClick)
         {
             this.lobbyName.text = lobbyName;
-            this.lobbyId.text = lobbyId;
+            this.lobbyCode.text = lobbyCode;
 
             this.playerSize = new Vector2(this.playersCount.rect.width / maxPlayerCount, this.playersCount.rect.height);
 
@@ -35,7 +35,5 @@ namespace Nsr.MultiSpaceShooter
                 child.sizeDelta = this.playerSize;
             }
         }
-
-        // TODO: OnClick join the lobby
     }
 }

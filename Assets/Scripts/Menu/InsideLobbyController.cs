@@ -7,30 +7,56 @@ namespace Nsr.MultiSpaceShooter
     public class InsideLobbyController : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI roomName, roomID;
-        [SerializeField] private Transform playersContainer;
-        [SerializeField] private LobbyPlayerUI firstLobbyPlayer;
+        [SerializeField] private LobbyPlayerUI[] lobbyPlayerUIs;
 
         [Header("Dependencies")] // use ? when accessing them
         [SerializeField] private LobbyManagerSO lobbyManagerSO;
 
-        public void Init(string lobbyName, string lobbyId)
+        private void OnEnable()
         {
-            this.roomName.text = lobbyName;
-            this.roomID.text = lobbyId;
+            // TODO: maybe OnEnable is caller too early before the Lobby gets to refresh?!
 
-            // TODO: set firstLobbyPlayer
-            // TODO: hide players over MaxPlayers
+            var lobby = lobbyManagerSO.CurrentLobby;
+            this.roomName.text = lobby?.Name;
+            this.roomID.text = lobby?.LobbyCode;
+
+            var maxPlayers = lobby?.MaxPlayers ?? 0;
+            var playersList = lobby?.Players;
+
+            for (int i = 0; i < lobbyPlayerUIs.Length; i++)
+            {
+                lobbyPlayerUIs[i].gameObject.SetActive(i < maxPlayers);
+                if (playersList != null && i < playersList.Count)
+                {
+                    bool.TryParse(playersList[i].Data["status"]?.Value, out bool playerStatus);
+                    lobbyPlayerUIs[i].Init(playersList[i].Id, playerStatus);
+                }
+            }
         }
 
 
         public void OnClickCancel()
         {
             // TODO: trigger LeftLobby
+            foreach (var playerUI in lobbyPlayerUIs)
+            {
+                if (playerUI.PlayerId == AuthenticationManagerSO.PlayerId)
+                {
+                    playerUI.terminate();
+                }
+            }
         }
 
         public void OnClickReady()
         {
-            // TODO: trigger ReadyToPlay
+            // TODO: trigger ReadyToPlay, (set self to ready and notify the others)
+            foreach (var playerUI in lobbyPlayerUIs)
+            {
+                if (playerUI.PlayerId == AuthenticationManagerSO.PlayerId)
+                {
+                    playerUI.SetReady(true);
+                }
+            }
         }
 
         public void OnLobbyRefreshed(Dictionary<ulong, bool> playersInLobby = default)

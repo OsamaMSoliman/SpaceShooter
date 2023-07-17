@@ -1061,8 +1061,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: {fileID: 6160413841189404233}
   roomID: {fileID: 5710489289914838243}
-  playersContainer: {fileID: 2735779606916764982}
-  firstLobbyPlayer: {fileID: 274327243307155099}
+  lobbyPlayerUIs:
+  - {fileID: 274327243307155099}
+  - {fileID: 226570939012726422}
+  - {fileID: 984136334353573276}
+  - {fileID: 751907682215876624}
   lobbyManagerSO: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
 --- !u!114 &330516139
 MonoBehaviour:
@@ -1739,6 +1742,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6cf0a49499b5ab4aadc3fd25985abb9, type: 3}
+--- !u!114 &226570939012726422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7139944194207728129, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6931845201402723479}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b04e2031fde8bb42811b855b0b27c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2674323662959874521 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
@@ -1755,7 +1770,7 @@ PrefabInstance:
     - target: {fileID: 4985422425559657805, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
         type: 3}
       propertyPath: m_Name
-      value: LobbyPlayerUI
+      value: LobbyPlayerUI (0)
       objectReference: {fileID: 0}
     - target: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
         type: 3}
@@ -1899,6 +1914,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LobbyPlayerUI (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4985422425559657805, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2006,6 +2026,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6cf0a49499b5ab4aadc3fd25985abb9, type: 3}
+--- !u!114 &751907682215876624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7139944194207728129, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7600243731752557073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b04e2031fde8bb42811b855b0b27c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3194945700035032927 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
@@ -2028,6 +2060,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LobbyPlayerUI (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985422425559657805, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
         type: 3}
@@ -2136,6 +2173,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6cf0a49499b5ab4aadc3fd25985abb9, type: 3}
+--- !u!114 &984136334353573276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7139944194207728129, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7979947128630699933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b04e2031fde8bb42811b855b0b27c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3139484936249117395 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4985422425559657806, guid: b6cf0a49499b5ab4aadc3fd25985abb9,
