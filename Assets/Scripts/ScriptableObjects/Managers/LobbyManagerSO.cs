@@ -37,6 +37,7 @@ namespace Nsr.MultiSpaceShooter
             RoomName = "";
             LeaveLobby();
         }
+        private void OnDisable() => cts?.Cancel(); // TODO: heartbeat and polling doesn't stop when stopping the game?!
         #endregion
 
 
@@ -55,7 +56,7 @@ namespace Nsr.MultiSpaceShooter
 
         public async Task CreateLobby()
         {
-            var allocation = await RelayService.Instance.CreateAllocationAsync(MaxPlayersCount);
+            var allocation = await RelayService.Instance.CreateAllocationAsync(MaxPlayersCount, "europe-west4");
             var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             var options = new CreateLobbyOptions
@@ -66,10 +67,14 @@ namespace Nsr.MultiSpaceShooter
                 }
             };
 
+            Debug.Log($"Create:ALLOCATION_JOIN_CODE:{options.Data[ALLOCATION_JOIN_CODE].Value},{options.Data[ALLOCATION_JOIN_CODE].Value.Length}");
+
             CurrentLobby = await LobbyService.Instance.CreateLobbyAsync(RoomName, MaxPlayersCount, options);
             Debug.Log($"Lobby created with Code: {CurrentLobby.LobbyCode}");
 
             NetworkManager.Singleton?.GetComponent<UnityTransport>().SetRelayServerData(new(allocation, "dtls"));
+            // NOTE: Must start the host directly to bind to the relay allocation!!!
+            NetworkManager.Singleton?.StartHost();
 
             cts = new CancellationTokenSource();
             PeriodicHeartBeat(cts.Token);
@@ -92,13 +97,24 @@ namespace Nsr.MultiSpaceShooter
 
         private async Task JoinAllocation()
         {
-            var allocation = await RelayService.Instance.JoinAllocationAsync(CurrentLobby.Data[ALLOCATION_JOIN_CODE].Value);
-            Debug.Log($"Lobby:{CurrentLobby.Id}:{CurrentLobby.LobbyCode}\n Allocation:{allocation.AllocationId}\n Players count: {CurrentLobby.Players.Count}");
+            try
+            {
+                Debug.Log($"Lobby joined with Code: {CurrentLobby.LobbyCode}");
+                Debug.Log($"Join:ALLOCATION_JOIN_CODE:{CurrentLobby.Data[ALLOCATION_JOIN_CODE].Value},{CurrentLobby.Data[ALLOCATION_JOIN_CODE].Value.Length}");
 
-            NetworkManager.Singleton?.GetComponent<UnityTransport>().SetRelayServerData(new(allocation, "dtls"));
+                var allocation = await RelayService.Instance.JoinAllocationAsync(CurrentLobby.Data[ALLOCATION_JOIN_CODE].Value);
+                Debug.Log($"Lobby:{CurrentLobby.Id}:{CurrentLobby.LobbyCode}\n Allocation:{allocation.AllocationId}\n Players count: {CurrentLobby.Players.Count}");
 
-            cts = new CancellationTokenSource();
-            PeriodicPolling(cts.Token);
+                NetworkManager.Singleton?.GetComponent<UnityTransport>().SetRelayServerData(new(allocation, "dtls"));
+                NetworkManager.Singleton?.StartClient();
+
+                cts = new CancellationTokenSource();
+                PeriodicPolling(cts.Token);
+            }
+            catch (RelayServiceException e)
+            {
+                Debug.Log($"Failed to Join allocation: {nameof(e.Reason)} : {e.Message}");
+            }
         }
         #endregion
 
@@ -171,6 +187,7 @@ namespace Nsr.MultiSpaceShooter
                 await Task.Delay(HeartbeatInterval * 1000);
                 while (CurrentLobby != null && !ct.IsCancellationRequested)
                 {
+                    Debug.Log("Heartbeat");
                     await LobbyService.Instance.SendHeartbeatPingAsync(CurrentLobby.Id);
                     // NOTE: token cancellation dictates that the wait must be at the end of the loop
                     await Task.Delay(HeartbeatInterval * 1000);
@@ -186,6 +203,7 @@ namespace Nsr.MultiSpaceShooter
             await Task.Delay(PollingInterval * 1000);
             while (CurrentLobby != null && !ct.IsCancellationRequested)
             {
+                Debug.Log(message: "Polling");
                 CurrentLobby = await LobbyService.Instance.GetLobbyAsync(CurrentLobby.Id);
                 OnLobbyUpdated?.Invoke(CurrentLobby);
                 // NOTE: token cancellation dictates that the wait must be at the end of the loop
