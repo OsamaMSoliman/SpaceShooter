@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -227,12 +228,18 @@ namespace Nsr.MultiSpaceShooter
             CurrentLobby = await LobbyService.Instance.UpdatePlayerAsync(CurrentLobby.Id, AuthenticationManagerSO.PlayerId, playerUpdate);
         }
 
+        public string GetHostName(Lobby lobby)
+        {
+            CurrentLobby.Players.First<Player>(p => p.Id == lobby.HostId).Data.TryGetValue(Constants.PLAYER_NAME, out var playerName);
+            return playerName.Value;
+        }
+
         private Player GetPlayerData()
         {
             return new Player
             {
                 Data = new Dictionary<string, PlayerDataObject> {
-                    { Constants.PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, PlayerName) }
+                    { Constants.PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerName) }
                 }
             };
         }

@@ -1,4 +1,3 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,25 +7,31 @@ namespace Nsr.MultiSpaceShooter
 {
     public class JoinLobbyBtn : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI lobbyName, lobbyCode;
+        [SerializeField] private TextMeshProUGUI lobbyName, lobbyHost;
         [SerializeField] private RectTransform playersCount;
         private Vector2 playerSize;
 
+        #region TODO: will be removed when using pooling
+        private Button btn;
+        private void Awake() => btn = GetComponent<Button>();
+        private void OnDestroy() => btn.onClick.RemoveAllListeners();
+        #endregion
+
         public string LobbyCode { get; private set; }
 
-        public void Init(string lobbyName, string lobbyCode, int playerCount, int maxPlayerCount, UnityAction onClick)
+        public void Init(string lobbyName, string hostName, int playerCount, int maxPlayerCount, UnityAction onClick)
         {
             this.lobbyName.text = lobbyName;
-            this.lobbyCode.text = lobbyCode;
+            this.lobbyHost.text = hostName;
 
             this.playerSize = new Vector2(this.playersCount.rect.width / maxPlayerCount, this.playersCount.rect.height);
 
             UpdatePlayersInside(playerCount);
 
-            GetComponent<Button>().onClick.AddListener(onClick);
+            btn.onClick.AddListener(onClick);
         }
 
-        public void UpdatePlayersInside(int playerCount)
+        private void UpdatePlayersInside(int playerCount)
         {
             for (int i = 0; i < this.playersCount.childCount; i++)
             {

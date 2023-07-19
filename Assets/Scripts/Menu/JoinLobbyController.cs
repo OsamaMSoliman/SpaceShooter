@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Unity.Services.Lobbies.Models;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Nsr.MultiSpaceShooter
@@ -8,47 +7,42 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private JoinLobbyBtn joinLobbyBtnPrefab;
         [SerializeField] private Transform scrollContent;
+        [SerializeField] private int refreshTime = 15;
 
-        [Header("Dependencies ?")] // use ? when accessing them
+        [Header("Dependencies")]
         [SerializeField] private LobbyManagerSO lobbyManagerSO;
+        [Header("Event Raiser when successful")]
+        [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
-        private void OnEnable()
-        {
-            // TODO:
-            // lobbyManagerSO.FetchLobbiesPeriodically(true);
-            // lobbyManagerSO.FetchedLobbies += FetchLobbies;
-        }
+        private Task periodicFetch;
+        private void OnEnable() => InvokeRepeating(nameof(FetchLobbiesPeriodically), 2, refreshTime);
 
-        private void OnDisable()
-        {
-            // TODO:
-            // lobbyManagerSO.FetchLobbiesPeriodically(false);
-            // lobbyManagerSO.FetchedLobbies -= FetchLobbies;
-        }
+        private void OnDisable() => CancelInvoke(nameof(FetchLobbiesPeriodically));
 
-        // public async void OnClickRefreshLobbies()
-        // {
-        //     var lobbies = await lobbyManagerSO?.GetPublicLobbies();
-        //     FetchLobbies(lobbies);
-        // }
-
-        private void FetchLobbies(List<Lobby> lobbies)
+        private async void FetchLobbiesPeriodically()
         {
             // TODO: ObjectPooling
             foreach (Transform item in scrollContent)
             {
-                Destroy(item);
+                Destroy(item.gameObject);
             }
+
+            var lobbies = await lobbyManagerSO.GetLobbies();
 
             foreach (var lobby in lobbies)
             {
-                JoinLobbyBtn joinLobbyBtn = Instantiate(joinLobbyBtnPrefab, parent: scrollContent);
+                Debug.Log($"{lobby.Name}, {lobby.Id}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers} ");
+                JoinLobbyBtn joinLobbyBtn = Instantiate(joinLobbyBtnPrefab, scrollContent);
                 joinLobbyBtn.Init(
                     lobby.Name,
-                    lobby.LobbyCode,
+                    lobby.GetHostName(),
                     lobby.Players.Count,
                     lobby.MaxPlayers,
-                    () => lobbyManagerSO?.JoinLobbyById(lobby.Id)
+                    async () =>
+                    {
+                        await lobbyManagerSO.JoinLobbyById(lobby.Id);
+                        canvasStateNotifier.OnClickChangeCanvas();
+                    }
                 );
             }
         }
