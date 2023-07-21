@@ -1,12 +1,13 @@
-using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 namespace Nsr.MultiSpaceShooter
 {
     public class InsideLobbyController : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI roomName, roomID;
+        [SerializeField] private TextMeshProUGUI roomName, roomCode;
         [SerializeField] private LobbyPlayerUI[] lobbyPlayerUIs;
 
         [Header("Dependencies")] // use ? when accessing them
@@ -14,56 +15,58 @@ namespace Nsr.MultiSpaceShooter
 
         private void OnEnable()
         {
-            // TODO: maybe OnEnable is caller too early before the Lobby gets to refresh?!
+            RefreshLobbyRoomFirstTime(lobbyManagerSO.CurrentLobby);
+            lobbyManagerSO.OnLobbyUpdated += RefreshLobbyRoom;
+        }
+        private void OnDisable() => lobbyManagerSO.OnLobbyUpdated -= RefreshLobbyRoom;
 
-            var lobby = lobbyManagerSO.CurrentLobby;
-            this.roomName.text = lobby?.Name;
-            this.roomID.text = lobby?.LobbyCode;
+        private void RefreshLobbyRoom(Lobby lobby)
+        {
+            this.roomName.text = lobby.Name;
+            this.roomCode.text = lobby.LobbyCode;
 
-            var maxPlayers = lobby?.MaxPlayers ?? 0;
-            var playersList = lobby?.Players;
+            var maxPlayers = lobby.MaxPlayers;
+            var playersList = lobby.Players;
+            var isHost = lobby.HostId == AuthenticationManagerSO.PlayerId;
 
             for (int i = 0; i < lobbyPlayerUIs.Length; i++)
             {
                 lobbyPlayerUIs[i].gameObject.SetActive(i < maxPlayers);
-                if (playersList != null && i < playersList.Count)
+                var isActive = i < playersList.Count;
+                if (isActive && playersList[i].Data != null)
                 {
-                    bool.TryParse(playersList[i].Data["status"]?.Value, out bool playerStatus);
-                    lobbyPlayerUIs[i].Init(playersList[i].Id, playerStatus);
+                    playersList[i].Data.TryGetValue(Constants.PLAYER_NAME, out var playerName);
+                    playersList[i].Data.TryGetValue(Constants.IS_READY, out var isPlayerReady);
+                    bool.TryParse(isPlayerReady?.Value, out bool isReady);
+                    lobbyPlayerUIs[i].Init(
+                        playersList[i].Id,
+                        playerName?.Value,
+                        isReady,
+                        isActive,
+                        isHost & playersList[i].Id != lobby.HostId);
+                }
+                else
+                {
+                    // NOTE: This is necessary in case a re-join after a disconnect!
+                    lobbyPlayerUIs[i].Init();
                 }
             }
         }
 
-
-        public void OnClickCancel()
+        private void RefreshLobbyRoomFirstTime(Lobby lobby)
         {
-            // TODO: trigger LeftLobby
-            foreach (var playerUI in lobbyPlayerUIs)
-            {
-                if (playerUI.PlayerId == AuthenticationManagerSO.PlayerId)
-                {
-                    playerUI.terminate();
-                }
-            }
+            RefreshLobbyRoom(lobby);
+            if (lobby.HostId == AuthenticationManagerSO.PlayerId)
+                foreach (var playerUI in lobbyPlayerUIs)
+                    playerUI.onKickBtnClicked += lobbyManagerSO.KickPlayer;
         }
 
-        public void OnClickReady()
-        {
-            // TODO: trigger ReadyToPlay, (set self to ready and notify the others)
-            foreach (var playerUI in lobbyPlayerUIs)
-            {
-                if (playerUI.PlayerId == AuthenticationManagerSO.PlayerId)
-                {
-                    playerUI.SetReady(true);
-                }
-            }
-        }
+        public void OnClickCancel() => lobbyManagerSO.LeaveLobby();
 
-        public void OnLobbyRefreshed(Dictionary<ulong, bool> playersInLobby = default)
+        public void OnClickReady(bool isReady)
         {
-            // TODO: MAYBE have 2 different methods? for updating the players and for refershing the connection?
-            // TODO: update the LobbyPlayers statuses
-            // TODO: animations ex: waiting text alpha pingpong, Lobbyplayer bounce like a beat
+            lobbyPlayerUIs.FirstOrDefault(p => p.PlayerId == AuthenticationManagerSO.PlayerId)?.SetReady(true);
+            lobbyManagerSO.SendReady(isReady);
         }
     }
 }

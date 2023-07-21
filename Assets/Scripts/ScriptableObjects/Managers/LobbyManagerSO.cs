@@ -228,10 +228,9 @@ namespace Nsr.MultiSpaceShooter
             CurrentLobby = await LobbyService.Instance.UpdatePlayerAsync(CurrentLobby.Id, AuthenticationManagerSO.PlayerId, playerUpdate);
         }
 
-        public string GetHostName(Lobby lobby)
+        public async void KickPlayer(string playerId)
         {
-            CurrentLobby.Players.First<Player>(p => p.Id == lobby.HostId).Data.TryGetValue(Constants.PLAYER_NAME, out var playerName);
-            return playerName.Value;
+            await LobbyService.Instance.RemovePlayerAsync(CurrentLobby.Id, playerId);
         }
 
         private Player GetPlayerData()
