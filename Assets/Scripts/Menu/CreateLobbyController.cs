@@ -11,10 +11,9 @@ namespace Nsr.MultiSpaceShooter
         [Header("Dependencies ?")] // use ? when accessing them
         [SerializeField] private LobbyManagerSO lobbyManagerSO;
         [Header("Event Raiser when successful")]
-        [SerializeField] private CanvasChangedEvent canvasChangedEvent;
-        [SerializeField] private CanvasState nextCanvasState;
+        [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
-        public void OnClickCreateNewLobby()
+        public async void OnClickCreateNewLobby()
         {
             if (string.IsNullOrEmpty(roomName.text))
             {
@@ -23,8 +22,8 @@ namespace Nsr.MultiSpaceShooter
             }
             else
             {
-                lobbyManagerSO?.CreateLobby();
-                canvasChangedEvent.Raise(nextCanvasState);
+                await lobbyManagerSO.CreateLobby();
+                canvasStateNotifier.OnClickChangeCanvas();
             }
         }
 
