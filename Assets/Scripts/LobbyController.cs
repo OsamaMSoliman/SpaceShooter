@@ -52,22 +52,22 @@ namespace Nsr.MultiSpaceShooter
         }
 
         #region Joining a Lobby
-        public static async Task<Lobby> JoinLobbyById(string lobbyId, Player player)
+        public static async Task<Lobby> JoinLobbyById(string lobbyId, Player player, CancellationToken ct)
         {
             var joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, new JoinLobbyByIdOptions { Player = player });
-            await JoinRelayAllocation(joinedLobby);
+            await JoinRelayAllocation(joinedLobby, ct);
             return joinedLobby;
         }
 
         [ObsoleteAttribute("NOTE: Code is only available to lobby members (so far players can't join a lobby through typing its Code)", true)]
-        public static async Task<Lobby> JoinLobbyByCode(string lobbyCode, Player player)
+        public static async Task<Lobby> JoinLobbyByCode(string lobbyCode, Player player, CancellationToken ct)
         {
             var joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, new JoinLobbyByCodeOptions { Player = player });
-            await JoinRelayAllocation(joinedLobby);
+            await JoinRelayAllocation(joinedLobby, ct);
             return joinedLobby;
         }
 
-        private static async Task JoinRelayAllocation(Lobby joinedLobby)
+        private static async Task JoinRelayAllocation(Lobby joinedLobby, CancellationToken ct)
         {
             try
             {
@@ -80,8 +80,7 @@ namespace Nsr.MultiSpaceShooter
                 NetworkManager.Singleton?.GetComponent<UnityTransport>().SetRelayServerData(new(allocation, "dtls"));
                 NetworkManager.Singleton?.StartClient();
 
-                // cts = new CancellationTokenSource();
-                // PeriodicPolling(cts.Token);
+                PeriodicPolling(joinedLobby, ct);
             }
             catch (RelayServiceException e)
             {
@@ -99,7 +98,7 @@ namespace Nsr.MultiSpaceShooter
             if (lobby == null) return;
             try
             {
-                var playerId = AuthenticationManagerSO.PlayerId;
+                var playerId = AuthenticationManager.PlayerId;
                 if (playerId == lobby.HostId)
                     await LobbyService.Instance.DeleteLobbyAsync(lobby.Id);
                 else
@@ -153,7 +152,7 @@ namespace Nsr.MultiSpaceShooter
         /// </summary>
         private static async void PeriodicHeartBeat(Lobby lobby, CancellationToken ct)
         {
-            if (lobby.HostId == AuthenticationManagerSO.PlayerId)
+            if (lobby.HostId == AuthenticationManager.PlayerId)
             {
                 while (!ct.IsCancellationRequested)
                 {
@@ -169,6 +168,7 @@ namespace Nsr.MultiSpaceShooter
         /// </summary>
         private static async void PeriodicPolling(Lobby lobby, CancellationToken ct)
         {
+            OnLobbyUpdated?.Invoke(lobby);
             while (lobby != null && !ct.IsCancellationRequested)
             {
                 await Task.Delay(PollingInterval * 1000, ct);
@@ -180,7 +180,7 @@ namespace Nsr.MultiSpaceShooter
 
         #endregion
 
-        public static async void SendReady(string lobbyId, bool isReady) => await LobbyService.Instance.UpdatePlayerAsync(lobbyId, AuthenticationManagerSO.PlayerId,
+        public static async void SendReady(string lobbyId, bool isReady) => await LobbyService.Instance.UpdatePlayerAsync(lobbyId, AuthenticationManager.PlayerId,
             new UpdatePlayerOptions
             {
                 Data = new(){

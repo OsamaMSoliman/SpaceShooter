@@ -20,13 +20,12 @@ namespace Nsr.MultiSpaceShooter
 
         private void RefreshLobbyRoom(Lobby lobby)
         {
-            Debug.Log($"{lobby.Name}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers}");
             this.roomName.text = lobby.Name;
             this.roomCode.text = lobby.LobbyCode;
 
             var maxPlayers = lobby.MaxPlayers;
             var playersList = lobby.Players;
-            var isHost = lobby.HostId == AuthenticationManagerSO.PlayerId;
+            var isHost = lobby.HostId == AuthenticationManager.PlayerId;
 
             for (int i = 0; i < lobbyPlayerUIs.Length; i++)
             {
@@ -60,7 +59,7 @@ namespace Nsr.MultiSpaceShooter
 
         private void AbilityToKickPlayers(Lobby lobby)
         {
-            if (lobby.HostId == AuthenticationManagerSO.PlayerId)
+            if (lobby.HostId == AuthenticationManager.PlayerId)
                 foreach (var playerUI in lobbyPlayerUIs)
                     playerUI.onKickBtnClicked += (playerId) => LobbyManager.Instance.KickPlayer(lobby.Id, playerId);
         }
@@ -69,7 +68,7 @@ namespace Nsr.MultiSpaceShooter
 
         public void OnClickReady(bool isReady)
         {
-            lobbyPlayerUIs.FirstOrDefault(p => p.PlayerId == AuthenticationManagerSO.PlayerId)?.SetReady(true);
+            lobbyPlayerUIs.FirstOrDefault(p => p.PlayerId == AuthenticationManager.PlayerId)?.SetReady(true);
             LobbyManager.Instance.SendReady(isReady);
         }
     }

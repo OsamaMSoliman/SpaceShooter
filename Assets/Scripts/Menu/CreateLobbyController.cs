@@ -23,7 +23,6 @@ namespace Nsr.MultiSpaceShooter
             }
             else
             {
-                Debug.Log($"Creating new lobby with room name: {_roomName} and max players count: {maxPlayersCount}");
                 LobbyManager.Instance.CreateLobby(maxPlayersCount, _roomName);
                 canvasStateNotifier.OnClickChangeCanvas();
             }

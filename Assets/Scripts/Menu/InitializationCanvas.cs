@@ -6,9 +6,7 @@ namespace Nsr.MultiSpaceShooter
 {
     public class InitializationCanvas : MonoBehaviour
     {
-        [SerializeField] private AuthenticationManagerSO authenticationManager;
-
-        public void OnClickInitBtn() => authenticationManager.LoginAnonymously();
+        public void OnClickInitBtn() => AuthenticationManager.LoginAnonymously();
 
         public void OnEndEditPlayerName(string name) => LobbyManager.Instance.PlayerName = name.Trim();
     }

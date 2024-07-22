@@ -8,12 +8,11 @@ using ParrelSync;
 
 namespace Nsr.MultiSpaceShooter
 {
-    [CreateAssetMenu(menuName = "SOs/Manager/AuthenticationManager")]
-    public class AuthenticationManagerSO : ScriptableObject
+    public static class AuthenticationManager
     {
         public static string PlayerId { get; private set; }
 
-        public async void LoginAnonymously()
+        public static async void LoginAnonymously()
         {
             if (UnityServices.State == ServicesInitializationState.Uninitialized)
             {
