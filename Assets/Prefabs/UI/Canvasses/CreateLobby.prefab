@@ -293,9 +293,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.LobbyManagerSO, Assembly-CSharp
-        m_MethodName: set_MaxPlayersCount
+      - m_Target: {fileID: 9025767295905575607}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.CreateLobbyController, Assembly-CSharp
+        m_MethodName: set_maxPlayersCount
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1195,8 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ba21becd1839548a16fdad972c390a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: {fileID: 6419966680896523032}
-  lobbyManagerSO: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
+  roomNameField: {fileID: 6419966680896523032}
   canvasStateNotifier: {fileID: 7348954203185336759}
 --- !u!114 &8652083930930002095
 MonoBehaviour:
@@ -2418,9 +2417,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.LobbyManagerSO, Assembly-CSharp
-        m_MethodName: set_MaxPlayersCount
+      - m_Target: {fileID: 9025767295905575607}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.CreateLobbyController, Assembly-CSharp
+        m_MethodName: set_maxPlayersCount
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2588,9 +2587,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.LobbyManagerSO, Assembly-CSharp
-        m_MethodName: set_MaxPlayersCount
+      - m_Target: {fileID: 9025767295905575607}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.CreateLobbyController, Assembly-CSharp
+        m_MethodName: set_maxPlayersCount
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

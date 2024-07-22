@@ -245,6 +245,7 @@ namespace Nsr.MultiSpaceShooter
             };
         }
 
+        public void UseCancelToken() => cts?.Cancel();
         #endregion
     }
 }

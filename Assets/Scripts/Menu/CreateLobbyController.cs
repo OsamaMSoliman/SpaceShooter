@@ -6,23 +6,25 @@ namespace Nsr.MultiSpaceShooter
 {
     public class CreateLobbyController : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField roomName;
+        [SerializeField] private TMP_InputField roomNameField;
+        private string _roomName => roomNameField.text.Trim();
 
-        [Header("Dependencies ?")] // use ? when accessing them
-        [SerializeField] private LobbyManagerSO lobbyManagerSO;
         [Header("Event Raiser when successful")]
         [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
-        public async void OnClickCreateNewLobby()
+        [field: SerializeField] public int maxPlayersCount { private get; set; } = 2;
+
+        public void OnClickCreateNewLobby()
         {
-            if (string.IsNullOrEmpty(roomName.text))
+            if (string.IsNullOrEmpty(_roomName))
             {
                 // highlight the inputfield in red to indecated an error
-                roomName.GetComponent<Outline>().enabled = true;
+                roomNameField.GetComponent<Outline>().enabled = true;
             }
             else
             {
-                await lobbyManagerSO.CreateLobby();
+                Debug.Log($"Creating new lobby with room name: {_roomName} and max players count: {maxPlayersCount}");
+                LobbyManager.Instance.CreateLobby(maxPlayersCount, _roomName);
                 canvasStateNotifier.OnClickChangeCanvas();
             }
         }

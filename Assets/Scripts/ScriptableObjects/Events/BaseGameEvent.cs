@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Nsr.MultiSpaceShooter
 {
-    public class BaseGameEvent<T> : ScriptableObject
+    public abstract class BaseGameEvent<T> : ScriptableObject
     {
         [field: SerializeField] public T CurrentValue { get; protected set; }
         private event UnityAction<T> unityEvent;

@@ -10,18 +10,17 @@ namespace Nsr.MultiSpaceShooter
         [SerializeField] private TextMeshProUGUI roomName, roomCode;
         [SerializeField] private LobbyPlayerUI[] lobbyPlayerUIs;
 
-        [Header("Dependencies")] // use ? when accessing them
-        [SerializeField] private LobbyManagerSO lobbyManagerSO;
-
         private void OnEnable()
         {
-            RefreshLobbyRoomFirstTime(lobbyManagerSO.CurrentLobby);
-            lobbyManagerSO.OnLobbyUpdated += RefreshLobbyRoom;
+            if (LobbyManager.Instance.CurrentLobby != null)
+                RefreshLobbyRoomFirstTime(LobbyManager.Instance.CurrentLobby);
+            LobbyManager.Instance.OnLobbyUpdated += RefreshLobbyRoom;
         }
-        private void OnDisable() => lobbyManagerSO.OnLobbyUpdated -= RefreshLobbyRoom;
+        private void OnDisable() => LobbyManager.Instance.OnLobbyUpdated -= RefreshLobbyRoom;
 
         private void RefreshLobbyRoom(Lobby lobby)
         {
+            Debug.Log($"{lobby.Name}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers}");
             this.roomName.text = lobby.Name;
             this.roomCode.text = lobby.LobbyCode;
 
@@ -56,17 +55,22 @@ namespace Nsr.MultiSpaceShooter
         private void RefreshLobbyRoomFirstTime(Lobby lobby)
         {
             RefreshLobbyRoom(lobby);
-            if (lobby.HostId == AuthenticationManagerSO.PlayerId)
-                foreach (var playerUI in lobbyPlayerUIs)
-                    playerUI.onKickBtnClicked += lobbyManagerSO.KickPlayer;
+            AbilityToKickPlayers(lobby);
         }
 
-        public void OnClickCancel() => lobbyManagerSO.LeaveLobby();
+        private void AbilityToKickPlayers(Lobby lobby)
+        {
+            if (lobby.HostId == AuthenticationManagerSO.PlayerId)
+                foreach (var playerUI in lobbyPlayerUIs)
+                    playerUI.onKickBtnClicked += (playerId) => LobbyManager.Instance.KickPlayer(lobby.Id, playerId);
+        }
+
+        public void OnClickCancel() => LobbyManager.Instance.LeaveLobby();
 
         public void OnClickReady(bool isReady)
         {
             lobbyPlayerUIs.FirstOrDefault(p => p.PlayerId == AuthenticationManagerSO.PlayerId)?.SetReady(true);
-            lobbyManagerSO.SendReady(isReady);
+            LobbyManager.Instance.SendReady(isReady);
         }
     }
 }

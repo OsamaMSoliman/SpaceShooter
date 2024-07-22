@@ -8,9 +8,8 @@ namespace Nsr.MultiSpaceShooter
         [SerializeField] private JoinLobbyBtn joinLobbyBtnPrefab;
         [SerializeField] private Transform scrollContent;
         [SerializeField] private int refreshTime = 15;
+        [SerializeField] private int _numOfLobbiesToFetch = 6;
 
-        [Header("Dependencies")]
-        [SerializeField] private LobbyManagerSO lobbyManagerSO;
         [Header("Event Raiser when successful")]
         [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
@@ -27,20 +26,20 @@ namespace Nsr.MultiSpaceShooter
                 Destroy(item.gameObject);
             }
 
-            var lobbies = await lobbyManagerSO.GetLobbies();
+            var lobbies = await LobbyManager.Instance.GetLobbies(_numOfLobbiesToFetch);
 
             foreach (var lobby in lobbies)
             {
-                Debug.Log($"{lobby.Name}, {lobby.Id}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers} ");
+                Debug.Log($"{lobby.Name}, {lobby.Id}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers}");
                 JoinLobbyBtn joinLobbyBtn = Instantiate(joinLobbyBtnPrefab, scrollContent);
                 joinLobbyBtn.Init(
                     lobby.Name,
                     lobby.GetHostName(),
                     lobby.Players.Count,
                     lobby.MaxPlayers,
-                    async () =>
+                    () =>
                     {
-                        await lobbyManagerSO.JoinLobbyById(lobby.Id);
+                        LobbyManager.Instance.JoinLobbyById(lobby.Id);
                         canvasStateNotifier.OnClickChangeCanvas();
                     }
                 );
