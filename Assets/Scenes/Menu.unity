@@ -207,26 +207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &954463638 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1462349669523563674, guid: a3410b8022946a34e849905c0abadc0c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1462349669106896986}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &954463644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954463638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1038d36b8c3ef43ab1d9455f328530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  authenticationManager: {fileID: 11400000, guid: d6f33cb16d5cbef4096db7501534f90d,
-    type: 2}
 --- !u!1 &1053675231
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,21 +438,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1462349668686574353, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 954463644}
-    - target: {fileID: 1462349668686574353, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnClickInitBtn
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462349668686574353, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Nsr.MultiSpaceShooter.InitializationCanvas, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 1462349669523563673, guid: a3410b8022946a34e849905c0abadc0c,
         type: 3}
       propertyPath: m_Enabled
@@ -597,26 +562,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8668280434572798651, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8668280434572798651, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 954463644}
-    - target: {fileID: 8668280434572798651, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnEndEditPlayerName
-      objectReference: {fileID: 0}
-    - target: {fileID: 8668280434572798651, guid: a3410b8022946a34e849905c0abadc0c,
-        type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Nsr.MultiSpaceShooter.InitializationCanvas, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3410b8022946a34e849905c0abadc0c, type: 3}
@@ -1220,6 +1165,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4306907727269696856, guid: c4e1fe002dbe6aa4c96b608415def028,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306907727269696862, guid: c4e1fe002dbe6aa4c96b608415def028,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4306907727750918029, guid: c4e1fe002dbe6aa4c96b608415def028,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1228,7 +1183,7 @@ PrefabInstance:
     - target: {fileID: 4306907727750918029, guid: c4e1fe002dbe6aa4c96b608415def028,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0007098119
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4306907727926814988, guid: c4e1fe002dbe6aa4c96b608415def028,
         type: 3}

@@ -9,17 +9,20 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private TextMeshProUGUI roomName, roomCode;
         [SerializeField] private LobbyPlayerUI[] lobbyPlayerUIs;
+        [SerializeField] private GameObject loadingSpinner;
 
         private void OnEnable()
         {
-            if (LobbyManager.Instance.CurrentLobby != null)
-                RefreshLobbyRoomFirstTime(LobbyManager.Instance.CurrentLobby);
+            // if (LobbyManager.Instance.CurrentLobby != null)
+            RefreshLobbyRoomFirstTime(LobbyManager.Instance.CurrentLobby);
             LobbyManager.Instance.OnLobbyUpdated += RefreshLobbyRoom;
         }
         private void OnDisable() => LobbyManager.Instance.OnLobbyUpdated -= RefreshLobbyRoom;
 
         private void RefreshLobbyRoom(Lobby lobby)
         {
+            if (ShowLoadingSpinner(lobby == null)) return;
+
             this.roomName.text = lobby.Name;
             this.roomCode.text = lobby.LobbyCode;
 
@@ -51,6 +54,13 @@ namespace Nsr.MultiSpaceShooter
             }
         }
 
+        private bool ShowLoadingSpinner(bool isLoading)
+        {
+            loadingSpinner.SetActive(isLoading);
+            lobbyPlayerUIs[0].transform.parent.gameObject.SetActive(!isLoading);
+            return isLoading;
+        }
+
         private void RefreshLobbyRoomFirstTime(Lobby lobby)
         {
             RefreshLobbyRoom(lobby);
@@ -59,7 +69,7 @@ namespace Nsr.MultiSpaceShooter
 
         private void AbilityToKickPlayers(Lobby lobby)
         {
-            if (lobby.HostId == AuthenticationManager.PlayerId)
+            if (lobby?.HostId == AuthenticationManager.PlayerId)
                 foreach (var playerUI in lobbyPlayerUIs)
                     playerUI.onKickBtnClicked += (playerId) => LobbyManager.Instance.KickPlayer(lobby.Id, playerId);
         }

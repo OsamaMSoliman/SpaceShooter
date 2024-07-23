@@ -346,10 +346,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: d6f33cb16d5cbef4096db7501534f90d, type: 2}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.AuthenticationManagerSO,
-          Assembly-CSharp
-        m_MethodName: LoginAnonymously
+      - m_Target: {fileID: 382262678728483555}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.InitializationCanvas, Assembly-CSharp
+        m_MethodName: OnClickInitBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -507,6 +506,7 @@ GameObject:
   - component: {fileID: 1462349669523563672}
   - component: {fileID: 1462349669523563675}
   - component: {fileID: 1462349669523563679}
+  - component: {fileID: 382262678728483555}
   m_Layer: 5
   m_Name: Initialization(BeforeLobby)
   m_TagString: Untagged
@@ -611,6 +611,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasChangedEvent: {fileID: 11400000, guid: aa7d7a8040b5783418509707e6138c3d, type: 2}
   myCanvasState: {fileID: 11400000, guid: 6fc40e9dcccab6748add335c750efbcb, type: 2}
+--- !u!114 &382262678728483555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462349669523563674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1038d36b8c3ef43ab1d9455f328530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4250919646759196197
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,9 +898,9 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 091e5528e9890a54ab41115ce1dcea6d, type: 2}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.LobbyManagerSO, Assembly-CSharp
-        m_MethodName: set_PlayerName
+      - m_Target: {fileID: 382262678728483555}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.InitializationCanvas, Assembly-CSharp
+        m_MethodName: OnEndEditPlayerName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

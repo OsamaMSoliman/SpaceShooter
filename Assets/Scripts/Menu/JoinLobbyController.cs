@@ -7,6 +7,7 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private JoinLobbyBtn joinLobbyBtnPrefab;
         [SerializeField] private Transform scrollContent;
+        [SerializeField] private GameObject loadingSpinner;
         [SerializeField] private int refreshTime = 15;
         [SerializeField] private int _numOfLobbiesToFetch = 6;
 
@@ -28,6 +29,8 @@ namespace Nsr.MultiSpaceShooter
 
             var lobbies = await LobbyManager.Instance.GetLobbies(_numOfLobbiesToFetch);
 
+            loadingSpinner.SetActive(lobbies.Count == 0);
+
             foreach (var lobby in lobbies)
             {
                 Debug.Log($"{lobby.Name}, {lobby.Id}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers}");
@@ -45,6 +48,5 @@ namespace Nsr.MultiSpaceShooter
                 );
             }
         }
-
     }
 }

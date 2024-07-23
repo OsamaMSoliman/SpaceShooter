@@ -32,7 +32,11 @@ namespace Nsr.MultiSpaceShooter
         public event Action<Lobby> OnLobbyUpdated;
         private void bindForward(Lobby lobby) => OnLobbyUpdated?.Invoke(lobby);
         private CancellationTokenSource cts = new();
-        private void OnDestroy() => cts?.Cancel();
+        private void OnDestroy(){
+            cts?.Cancel();
+            cts?.Dispose();
+            // LobbyController.OnLobbyUpdated -= _instance.bindForward;
+        }
         #endregion
 
         # region public Methods
