@@ -5,7 +5,6 @@ namespace Nsr.MultiSpaceShooter
 {
     public class RotateAroundZ : MonoBehaviour
     {
-
         [SerializeField] private bool rotateOnStart;
         private void Awake()
         {

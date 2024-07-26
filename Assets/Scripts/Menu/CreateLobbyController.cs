@@ -8,13 +8,23 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private TMP_InputField roomNameField;
         private string _roomName => roomNameField.text.Trim();
+        [field: SerializeField] public int maxPlayersCount { private get; set; } = 2;
+        [SerializeField] private GameObject createBtn, loadingSpinner;
 
         [Header("Event Raiser when successful")]
         [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
-        [field: SerializeField] public int maxPlayersCount { private get; set; } = 2;
 
-        public void OnClickCreateNewLobby()
+        private void OnEnable()
+        {
+            // reset the UI
+            roomNameField.text = "";
+            roomNameField.GetComponent<Outline>().enabled = false;
+            createBtn.SetActive(true);
+            loadingSpinner.SetActive(false);
+        }
+
+        public async void OnClickCreateNewLobby()
         {
             if (string.IsNullOrEmpty(_roomName))
             {
@@ -23,7 +33,7 @@ namespace Nsr.MultiSpaceShooter
             }
             else
             {
-                LobbyManager.Instance.CreateLobby(maxPlayersCount, _roomName);
+                await LobbyManager.Instance.CreateLobby(maxPlayersCount, _roomName); // TODO: add the spinner here
                 canvasStateNotifier.OnClickChangeCanvas();
             }
         }

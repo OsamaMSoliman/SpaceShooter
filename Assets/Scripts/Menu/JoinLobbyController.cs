@@ -40,9 +40,9 @@ namespace Nsr.MultiSpaceShooter
                     lobby.GetHostName(),
                     lobby.Players.Count,
                     lobby.MaxPlayers,
-                    () =>
+                    async () =>
                     {
-                        LobbyManager.Instance.JoinLobbyById(lobby.Id);
+                        await LobbyManager.Instance.JoinLobbyById(lobby.Id);
                         canvasStateNotifier.OnClickChangeCanvas();
                     }
                 );

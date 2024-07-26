@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b04e2031fde8bb42811b855b0b27c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: {fileID: 8174409815945134056}
+  playerName: {fileID: 8174409815945134056}
   playerStatus: {fileID: 6697455690773362775}
   playerStatusImg: {fileID: 4985422424915901148}
   readySprite: {fileID: 21300058, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player ID
+  m_text: Player Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

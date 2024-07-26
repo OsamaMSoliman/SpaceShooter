@@ -2,6 +2,7 @@ using System.Linq;
 using TMPro;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Nsr.MultiSpaceShooter
 {
@@ -9,19 +10,27 @@ namespace Nsr.MultiSpaceShooter
     {
         [SerializeField] private TextMeshProUGUI roomName, roomCode;
         [SerializeField] private LobbyPlayerUI[] lobbyPlayerUIs;
-        [SerializeField] private GameObject loadingSpinner;
+        [SerializeField] private Button readyBtn, notReadyBtn;
+        private CanvasStateNotifier canvasStateNotifier;
+        private void Awake() => canvasStateNotifier = GetComponent<CanvasStateNotifier>();
 
         private void OnEnable()
         {
-            // if (LobbyManager.Instance.CurrentLobby != null)
             RefreshLobbyRoomFirstTime(LobbyManager.Instance.CurrentLobby);
             LobbyManager.Instance.OnLobbyUpdated += RefreshLobbyRoom;
+            // reset the UI
+            readyBtn.gameObject.SetActive(true);
+            notReadyBtn.gameObject.SetActive(false);
         }
         private void OnDisable() => LobbyManager.Instance.OnLobbyUpdated -= RefreshLobbyRoom;
 
         private void RefreshLobbyRoom(Lobby lobby)
         {
-            if (ShowLoadingSpinner(lobby == null)) return;
+            if (lobby.Players.FirstOrDefault(p => p.Id == AuthenticationManager.PlayerId) == null)
+            {
+                canvasStateNotifier.OnClickChangeCanvas();
+                return;
+            }
 
             this.roomName.text = lobby.Name;
             this.roomCode.text = lobby.LobbyCode;
@@ -54,30 +63,31 @@ namespace Nsr.MultiSpaceShooter
             }
         }
 
-        private bool ShowLoadingSpinner(bool isLoading)
-        {
-            loadingSpinner.SetActive(isLoading);
-            lobbyPlayerUIs[0].transform.parent.gameObject.SetActive(!isLoading);
-            return isLoading;
-        }
-
         private void RefreshLobbyRoomFirstTime(Lobby lobby)
         {
+            if (lobby == null) throw new System.Exception("Lobby is null, this should not happen in the init phase!");
             RefreshLobbyRoom(lobby);
             AbilityToKickPlayers(lobby);
         }
 
         private void AbilityToKickPlayers(Lobby lobby)
         {
-            if (lobby?.HostId == AuthenticationManager.PlayerId)
+            if (lobby.HostId == AuthenticationManager.PlayerId)
                 foreach (var playerUI in lobbyPlayerUIs)
-                    playerUI.onKickBtnClicked += (playerId) => LobbyManager.Instance.KickPlayer(lobby.Id, playerId);
+                    playerUI.onKickBtnClicked += (playerUI) => OnPlayerKicked(playerUI, lobby.Id);
+        }
+
+        private async void OnPlayerKicked(LobbyPlayerUI playerUI, string lobbyId)
+        {
+            await LobbyManager.Instance.KickPlayer(lobbyId, playerUI.PlayerId);
+            playerUI.Init();
         }
 
         public void OnClickCancel() => LobbyManager.Instance.LeaveLobby();
 
         public void OnClickReady(bool isReady)
         {
+            // NOTE: we don't know which player slot is ours, so we search first then set the first one we found to ready
             lobbyPlayerUIs.FirstOrDefault(p => p.PlayerId == AuthenticationManager.PlayerId)?.SetReady(true);
             LobbyManager.Instance.SendReady(isReady);
         }

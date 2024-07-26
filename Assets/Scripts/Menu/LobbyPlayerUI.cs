@@ -7,7 +7,7 @@ namespace Nsr.MultiSpaceShooter
 {
     public class LobbyPlayerUI : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI playerId, playerStatus;
+        [SerializeField] private TextMeshProUGUI playerName, playerStatus;
         [SerializeField] private Image playerStatusImg;
         [SerializeField] private Sprite readySprite, notReadySprite;
         [SerializeField] private Button kickBtn;
@@ -20,7 +20,7 @@ namespace Nsr.MultiSpaceShooter
         public void Init(string playerId = null, string playerName = "Player ID", bool isReady = false, bool isActive = false, bool isHost = false)
         {
             PlayerId = playerId;
-            this.playerId.text = playerName;
+            this.playerName.text = playerName;
             canvasGroup.alpha = isActive ? 1 : 0.1f;
             SetReady(isActive & isReady);
             kickBtn.gameObject.SetActive(isActive & isHost);
@@ -34,12 +34,12 @@ namespace Nsr.MultiSpaceShooter
         }
 
 
-        private event Action<string> kickBtnClicked;
-        public event Action<string> onKickBtnClicked
+        private event Action<LobbyPlayerUI> kickBtnClicked;
+        public event Action<LobbyPlayerUI> onKickBtnClicked
         {
             add => kickBtnClicked = value;
             remove => throw new NotImplementedException("Only overwriting is allowed!");
         }
-        public void OnClickKickPlayer() => kickBtnClicked?.Invoke(PlayerId);
+        public void OnClickKickPlayer() => kickBtnClicked?.Invoke(this);
     }
 }

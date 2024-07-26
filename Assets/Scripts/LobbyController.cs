@@ -102,8 +102,7 @@ namespace Nsr.MultiSpaceShooter
                 if (playerId == lobby.HostId)
                     await LobbyService.Instance.DeleteLobbyAsync(lobby.Id);
                 else
-                    KickPlayer(lobby.Id, playerId);
-                lobby = null;
+                    await KickPlayer(lobby.Id, playerId);
             }
             catch (LobbyServiceException e)
             {
@@ -188,7 +187,7 @@ namespace Nsr.MultiSpaceShooter
                     }
             });
 
-        public static async void KickPlayer(string lobbyId, string playerId) => await LobbyService.Instance.RemovePlayerAsync(lobbyId, playerId);
+        public static async Task KickPlayer(string lobbyId, string playerId) => await LobbyService.Instance.RemovePlayerAsync(lobbyId, playerId);
 
         public static Player GetPlayerData(string PlayerName) => new Player
         {
