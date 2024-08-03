@@ -18,7 +18,6 @@ namespace Nsr.MultiSpaceShooter
                 if (_instance == null)
                 {
                     _instance = FindObjectOfType<LobbyManager>() ?? new GameObject("LobbyManager").AddComponent<LobbyManager>();
-                    LobbyController.OnLobbyUpdated += _instance.bindForward;
                 }
                 return _instance;
             }
@@ -26,27 +25,26 @@ namespace Nsr.MultiSpaceShooter
         #endregion
 
         #region Fields
-        [field: SerializeField] private string playerName;
-        public string PlayerName { private get => playerName; set => playerName = value.Trim(); }
+        [SerializeField] private PlayerData playerData;
+        [SerializeField] private LobbyData lobbyData;
         public Lobby CurrentLobby { get; private set; }
         public event Action<Lobby> OnLobbyUpdated;
-        private void bindForward(Lobby lobby) => OnLobbyUpdated?.Invoke(lobby);
         private CancellationTokenSource cts = new();
-        private void OnDestroy(){
+        private void OnDestroy()
+        {
             cts?.Cancel();
             cts?.Dispose();
-            // LobbyController.OnLobbyUpdated -= _instance.bindForward;
         }
         #endregion
 
         # region public Methods
         // NOTE: this waits for the lobby to be created before returning
-        public async Task CreateLobby(int maxPlayersCount, string roomName) =>
-            CurrentLobby = await LobbyController.CreateLobby(maxPlayersCount, roomName, LobbyController.GetPlayerData(PlayerName), cts.Token);
+        public async Task CreateLobby() =>
+            CurrentLobby = await LobbyController.CreateLobby(lobbyData.LobbyName, lobbyData.MaxPlayers, LobbyController.GetPlayer(playerData), cts.Token, OnLobbyUpdated);
 
         // NOTE: this waits for the lobby to be joined before returning
         public async Task JoinLobbyById(string lobbyId) =>
-            CurrentLobby = await LobbyController.JoinLobbyById(lobbyId, LobbyController.GetPlayerData(PlayerName), cts.Token);
+            CurrentLobby = await LobbyController.JoinLobbyById(lobbyId, LobbyController.GetPlayer(playerData), ct: cts.Token, OnLobbyUpdated);
 
         public Task<List<Lobby>> GetLobbies(int numOfLobbiesToFetch = 10) => LobbyController.GetLobbies(numOfLobbiesToFetch);
 
@@ -54,7 +52,16 @@ namespace Nsr.MultiSpaceShooter
 
         public void LeaveLobby() => LobbyController.LeaveLobby(CurrentLobby, cts);
 
-        public void SendReady(bool isReady) => LobbyController.SendReady(CurrentLobby.Id, isReady);
+        public async void SendReady(bool isReady) => await LobbyController.SendReady(CurrentLobby.Id, isReady);
+
+        public async void StartGame()
+        {
+            if (CurrentLobby.HostId != AuthenticationManager.PlayerId) return;
+            string relayCode = await LobbyController.CreateRelayAllocation(CurrentLobby.MaxPlayers);
+            await LobbyController.LockLobby(CurrentLobby.Id, relayCode);
+            // NOTE: the lobby shouldn't be destroyed here directly, it should be destroyed later, after the rest of the players enter the game
+        }
         #endregion
+
     }
 }

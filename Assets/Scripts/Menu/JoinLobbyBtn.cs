@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -17,16 +18,17 @@ namespace Nsr.MultiSpaceShooter
         private void OnDestroy() => btn.onClick.RemoveAllListeners();
         #endregion
 
-        public string LobbyCode { get; private set; }
+        // public Lobby Lobby { get; private set; }
 
-        public void Init(string lobbyName, string hostName, int playerCount, int maxPlayerCount, UnityAction onClick)
+        public void Init(Lobby lobby, UnityAction onClick)
         {
-            this.lobbyName.text = lobbyName;
-            this.lobbyHost.text = hostName;
+            // this.Lobby = lobby;
+            this.lobbyName.text = lobby.Name;
+            this.lobbyHost.text = lobby.GetHostName();
 
-            this.playerSize = new Vector2(this.playersCount.rect.width / maxPlayerCount, this.playersCount.rect.height);
+            this.playerSize = new Vector2(this.playersCount.rect.width / lobby.MaxPlayers, this.playersCount.rect.height);
 
-            UpdatePlayersInside(playerCount);
+            UpdatePlayersInside(lobby.Players.Count);
 
             btn.onClick.AddListener(onClick);
         }

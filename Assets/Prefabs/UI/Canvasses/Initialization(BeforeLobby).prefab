@@ -898,9 +898,9 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 382262678728483555}
-        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.InitializationCanvas, Assembly-CSharp
-        m_MethodName: OnEndEditPlayerName
+      - m_Target: {fileID: 11400000, guid: 1139cb68eafe7a946b887aa74119678c, type: 2}
+        m_TargetAssemblyTypeName: Nsr.MultiSpaceShooter.PlayerData, Assembly-CSharp
+        m_MethodName: set_PlayerName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,7 +5,7 @@ namespace Nsr.MultiSpaceShooter
 {
     public class JoinLobbyController : MonoBehaviour
     {
-        [SerializeField] private JoinLobbyBtn joinLobbyBtnPrefab;
+        [SerializeField] private JoinLobbyBtn templateBtn;
         [SerializeField] private Transform scrollContent;
         [SerializeField] private GameObject loadingSpinner;
         [SerializeField] private int refreshTime = 15;
@@ -14,16 +14,18 @@ namespace Nsr.MultiSpaceShooter
         [Header("Event Raiser when successful")]
         [SerializeField] private CanvasStateNotifier canvasStateNotifier;
 
-        private Task periodicFetch;
-        private void OnEnable() => InvokeRepeating(nameof(FetchLobbiesPeriodically), 2, refreshTime);
+        // private void OnEnable() => InvokeRepeating(nameof(FetchLobbiesPeriodically), 2, refreshTime);
 
-        private void OnDisable() => CancelInvoke(nameof(FetchLobbiesPeriodically));
+        // private void OnDisable() => CancelInvoke(nameof(FetchLobbiesPeriodically));
 
-        private async void FetchLobbiesPeriodically()
+        private void Awake() => templateBtn.gameObject.SetActive(false);
+        public async void OnClick_RefreshBtn_FetchLobbies()
+        // private async void FetchLobbiesPeriodically()
         {
             // TODO: ObjectPooling
             foreach (Transform item in scrollContent)
             {
+                if (item == templateBtn.transform) continue;
                 Destroy(item.gameObject);
             }
 
@@ -34,12 +36,9 @@ namespace Nsr.MultiSpaceShooter
             foreach (var lobby in lobbies)
             {
                 Debug.Log($"{lobby.Name}, {lobby.Id}, {lobby.LobbyCode}, {lobby.Players.Count}, {lobby.MaxPlayers}");
-                JoinLobbyBtn joinLobbyBtn = Instantiate(joinLobbyBtnPrefab, scrollContent);
-                joinLobbyBtn.Init(
-                    lobby.Name,
-                    lobby.GetHostName(),
-                    lobby.Players.Count,
-                    lobby.MaxPlayers,
+                JoinLobbyBtn joinLobbyBtn = Instantiate(templateBtn, scrollContent);
+                joinLobbyBtn.gameObject.SetActive(true);
+                joinLobbyBtn.Init(lobby,
                     async () =>
                     {
                         await LobbyManager.Instance.JoinLobbyById(lobby.Id);

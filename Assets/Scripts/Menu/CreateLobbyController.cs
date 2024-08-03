@@ -7,8 +7,7 @@ namespace Nsr.MultiSpaceShooter
     public class CreateLobbyController : MonoBehaviour
     {
         [SerializeField] private TMP_InputField roomNameField;
-        private string _roomName => roomNameField.text.Trim();
-        [field: SerializeField] public int maxPlayersCount { private get; set; } = 2;
+        [SerializeField] private LobbyData lobbyData;
         [SerializeField] private GameObject createBtn, loadingSpinner;
 
         [Header("Event Raiser when successful")]
@@ -20,20 +19,26 @@ namespace Nsr.MultiSpaceShooter
             // reset the UI
             roomNameField.text = "";
             roomNameField.GetComponent<Outline>().enabled = false;
-            createBtn.SetActive(true);
-            loadingSpinner.SetActive(false);
+            ResetVisibility(true);
+        }
+
+        private void ResetVisibility(bool isVisible)
+        {
+            createBtn.SetActive(isVisible);
+            loadingSpinner.SetActive(!isVisible);
         }
 
         public async void OnClickCreateNewLobby()
         {
-            if (string.IsNullOrEmpty(_roomName))
+            if (string.IsNullOrEmpty(lobbyData.LobbyName))
             {
                 // highlight the inputfield in red to indecated an error
                 roomNameField.GetComponent<Outline>().enabled = true;
             }
             else
             {
-                await LobbyManager.Instance.CreateLobby(maxPlayersCount, _roomName); // TODO: add the spinner here
+                ResetVisibility(false);
+                await LobbyManager.Instance.CreateLobby();
                 canvasStateNotifier.OnClickChangeCanvas();
             }
         }
